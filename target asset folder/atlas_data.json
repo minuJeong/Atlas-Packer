@@ -1,0 +1,56 @@
+{
+    "Layer 8": {
+        "y": 748, 
+        "x": 1502, 
+        "height": 22, 
+        "width": 304
+    }, 
+    "Layer 1": {
+        "y": 774, 
+        "x": 1024, 
+        "height": 150, 
+        "width": 940
+    }, 
+    "Layer 2": {
+        "y": 0, 
+        "x": 1502, 
+        "height": 748, 
+        "width": 426
+    }, 
+    "Layer 3": {
+        "y": 0, 
+        "x": 1024, 
+        "height": 774, 
+        "width": 478
+    }, 
+    "Layer 4": {
+        "y": 924, 
+        "x": 1024, 
+        "height": 85, 
+        "width": 401
+    }, 
+    "Layer 5": {
+        "y": 1024, 
+        "x": 0, 
+        "height": 116, 
+        "width": 122
+    }, 
+    "Layer 6": {
+        "y": 0, 
+        "x": 1928, 
+        "height": 694, 
+        "width": 47
+    }, 
+    "Layer 7": {
+        "y": 0, 
+        "x": 1975, 
+        "height": 45, 
+        "width": 59
+    }, 
+    "Background": {
+        "y": 0, 
+        "x": 0, 
+        "height": 1024, 
+        "width": 1024
+    }
+}

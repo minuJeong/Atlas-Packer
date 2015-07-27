@@ -1,34 +1,25 @@
 {
-	"app_name": "minuj_crawl",
-	"window_width": 400,
-	"window_height": 300,
-
-	"psd_handler": {
-		"frequency": 1024,
-
-		"src_dir_psd": "original source folder",
-		"src_dir_max": "original source folder",
-		
-		"trg_dir": "target asset folder",
-
-		"texture_size": {
-			"width": 4096,
-			"height": 4096
-		},
-
-		"texture_padding": 2
-	},
-
-	// for further use: auto web crawler
-	"headers": {
-		"Content-type": "application/x-www-form-urlencoded",
-		"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36"
-	},
-	
-	// replace __query__ with query word
-	"crawl_urls": {
-		"google image": "https://www.google.com/search?q=__query__&tbm=isch",
-		"pinterest": "http://www.pinterest.com/search/pins/?q=__query__",
-		"tumblr" :"https://www.tumblr.com/search/__query__"
-	}
+    "app_name": "minuj_crawl",
+    "window_width": 400,
+    "window_height": 300,
+    "psd_handler": {
+        "frequency": 1024,
+        "src_dir_psd": "original source folder",
+        "src_dir_max": "original source folder",
+        "trg_dir": "target asset folder",
+        "texture_size": {
+            "width": 2048,
+            "height": 2048
+        },
+        "texture_padding": 2
+    },
+    "headers": {
+        "Content-type": "application/x-www-form-urlencoded",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36"
+    },
+    "crawl_urls": {
+        "google image": "https://www.google.com/search?q=__query__&tbm=isch",
+        "pinterest": "http://www.pinterest.com/search/pins/?q=__query__",
+        "tumblr": "https://www.tumblr.com/search/__query__"
+    }
 }

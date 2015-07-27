@@ -12,128 +12,129 @@ from Tkinter import *
 # python external libraires
 
 # project modules
-from crawljob import *
+from job import *
 
 
 # App Class Definition
 class App:
-	""" GUI application wrapping """
 
-	def __init__(self, master):
+    """ GUI application wrapping """
 
-		# 
-		self.master = master
-		
-		# workers
-		self.psddealer = PSDDealer(self)
-		self.texturedealer = TextureDealer(self)
+    def __init__(self, master):
 
-		# read configuration file
-		conf = json.loads(open("conf.json").read())
-		self.window_width = conf["window_width"]
-		self.window_height = conf["window_height"]
-		self.master.minsize(self.window_width, self.window_height)
-		self.master.maxsize(self.window_width, self.window_height)
+        #
+        self.master = master
 
+        # workers
+        self.psddealer = PSDDealer(self)
+        self.texturedealer = TextureDealer(self)
 
-		# GUI elements
-		self.frame_button = Frame(master)
-		self.frame_button.pack(side=TOP)
-		
-		self.frame_checkbutton = Frame(master)
-		self.frame_checkbutton.pack(side=TOP)
+        # read configuration file
+        conf = json.loads(open("conf.json").read())
+        self.window_width = conf["window_width"]
+        self.window_height = conf["window_height"]
+        self.master.minsize(self.window_width, self.window_height)
+        self.master.maxsize(self.window_width, self.window_height)
 
-		self.bool_repeat = IntVar()
-		self.cb_repeatrun = Checkbutton(self.frame_checkbutton, text="Repeat parsing psd files. [r]", variable=self.bool_repeat)
-		self.cb_repeatrun.pack(side=BOTTOM)
+        # GUI elements
+        self.frame_button = Frame(master)
+        self.frame_button.pack(side=TOP)
 
-		self.bool_packtexture = IntVar()
-		self.cb_createtexture = Checkbutton(self.frame_checkbutton, text="Generate atlas texture and send to Unity project. [t]", variable=self.bool_packtexture)
-		self.cb_createtexture.pack(side=BOTTOM)
+        self.frame_checkbutton = Frame(master)
+        self.frame_checkbutton.pack(side=TOP)
 
-		self.b_run = Button(self.frame_button, text="Loading")
-		self.b_run.pack(side=TOP, expand=YES, fill=Y)
+        self.bool_repeat = IntVar()
+        self.cb_repeatrun = Checkbutton(
+            self.frame_checkbutton, text="Repeat parsing psd files. [r]", variable=self.bool_repeat)
+        self.cb_repeatrun.pack(side=BOTTOM)
 
-		# terminate handler
-		self.b_quit = Button(self.frame_button, text="Exit", command=self.onQuit)
-		self.master.bind("<Command-q>", self.onQuit)
-		self.master.bind("<Command-w>", self.onQuit)
-		self.master.bind("<Escape>", self.onQuit)
-		self.b_quit.pack(side=TOP, expand=YES, fill=Y)
+        self.bool_packtexture = IntVar()
+        self.cb_createtexture = Checkbutton(
+            self.frame_checkbutton, text="Generate atlas texture. [t]", variable=self.bool_packtexture)
+        self.cb_createtexture.pack(side=BOTTOM)
 
-		# start listening buttons
-		self.enableRunButton()
-		pass
+        self.b_run = Button(self.frame_button, text="Loading")
+        self.b_run.pack(side=TOP, expand=YES, fill=Y)
 
-	# toggle button
-	def enableRunButton(self):
-		self.b_run["text"] = "Run"
-		self.b_run["command"] = self.onRun
-		self.master.bind("<space>", self.onRun)
-		self.cb_repeatrun.configure(state="normal")
-		self.cb_createtexture.configure(state="normal")
-		self.master.bind("r", self.onRepeatToggle)
-		self.master.bind("t", self.onTexturePackToggle)
-		pass
+        # terminate handler
+        self.b_quit = Button(
+            self.frame_button, text="Exit", command=self.onQuit)
+        self.master.bind("<Command-q>", self.onQuit)
+        self.master.bind("<Command-w>", self.onQuit)
+        self.master.bind("<Escape>", self.onQuit)
+        self.b_quit.pack(side=TOP, expand=YES, fill=Y)
 
-	def disableRunButton(self):
-		self.b_run["text"] = "Stop"
-		self.b_run["command"] = self.onStop
-		self.master.bind("<space>", self.onStop)
-		self.cb_repeatrun.configure(state="disabled")
-		self.cb_createtexture.configure(state="disabled")
-		self.master.unbind("r")
-		self.master.unbind("t")
-		pass
+        # start listening buttons
+        self.enableRunButton()
+        pass
 
-	# Button click event handlers
-	def onRun(self, event=None):
-		self.disableRunButton()
-		
-		t_PSDDealer = threading.Thread(target=self.onThreadStarted_PSDDealer)
-		t_PSDDealer.start()
-		pass
+    # toggle button
+    def enableRunButton(self):
+        self.b_run["text"] = "Run"
+        self.b_run["command"] = self.onRun
+        self.master.bind("<space>", self.onRun)
+        self.cb_repeatrun.configure(state="normal")
+        self.cb_createtexture.configure(state="normal")
+        self.master.bind("r", self.onRepeatToggle)
+        self.master.bind("t", self.onTexturePackToggle)
+        pass
 
-	def onStop(self, event=None):
-		self.enableRunButton()
-		self.psddealer.askstop()
-		pass
+    def disableRunButton(self):
+        self.b_run["text"] = "Stop"
+        self.b_run["command"] = self.onStop
+        self.master.bind("<space>", self.onStop)
+        self.cb_repeatrun.configure(state="disabled")
+        self.cb_createtexture.configure(state="disabled")
+        self.master.unbind("r")
+        self.master.unbind("t")
+        pass
 
-	def onQuit(self, event=None):
-		self.onStop()
-		self.master.quit()
-		pass
+    # Button click event handlers
+    def onRun(self, event=None):
+        self.disableRunButton()
 
-	def onRepeatToggle(self, event=None):
-		self.cb_repeatrun.toggle()
-		pass
+        t_PSDDealer = threading.Thread(target=self.onThreadStarted_PSDDealer)
+        t_PSDDealer.start()
+        pass
 
-	def onTexturePackToggle(self, event=None):
-		self.cb_createtexture.toggle()
-		pass
+    def onStop(self, event=None):
+        self.enableRunButton()
+        self.psddealer.askstop()
+        pass
 
-	# psd dealer thread
-	def onThreadStarted_PSDDealer(self):
-		self.psddealer.askrun(self.bool_repeat.get())
-		pass
+    def onQuit(self, event=None):
+        self.onStop()
+        self.master.quit()
+        pass
 
-	# event handler
-	def onWorkTerminate(self):
-		self.onStop()
-		pass
+    def onRepeatToggle(self, event=None):
+        self.cb_repeatrun.toggle()
+        pass
 
+    def onTexturePackToggle(self, event=None):
+        self.cb_createtexture.toggle()
+        pass
+
+    # psd dealer thread
+    def onThreadStarted_PSDDealer(self):
+        self.psddealer.askrun(self.bool_repeat.get())
+        pass
+
+    # event handler
+    def onWorkTerminate(self):
+        self.onStop()
+        pass
 
 
 def run():
-	""" start point of this project. """
+    """ start point of this project. """
 
-	master = Tk()
-	master.wm_title("GUIed Asset Manager")
+    master = Tk()
+    master.wm_title("GUIed Asset Manager")
 
-	app = App(master)
-	master.mainloop()
+    app = App(master)
+    master.mainloop()
 
 
 if __name__ == "__main__":
-	run()
-
+    run()
